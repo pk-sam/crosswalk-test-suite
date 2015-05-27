@@ -30,12 +30,12 @@
 
 local_path=$(cd $(dirname $0);pwd)
 source $local_path/Common
-
+get_currentuser
 func_check_xwalkservice
 
 pkgcmd -i -t xpk -p $local_path/../source/signature.xpk -q
-app_name=`sqlite3 /home/app/.applications/dbspace/.app_info.db "select name from app_info where name like \"%signature%\";"`
-app_id=`sqlite3 /home/app/.applications/dbspace/.app_info.db "select package from app_info where name like \"%signature%\";"`
+app_name=`sqlite3 /home/$TIZEN_USER/.applications/dbspace/.app_info.db "select name from app_info where name like \"%signature%\";"`
+app_id=`sqlite3 /home/$TIZEN_USER/.applications/dbspace/.app_info.db "select package from app_info where name like \"%signature%\";"`
 if [[ $app_name =~ "signature" ]]; then
     echo "The signature.xpk install successfully"
     # uninstall xpk

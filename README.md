@@ -8,12 +8,15 @@ This is a test suite for Crosswalk, which includes:
 * `webapi/`: Web API tests
 * `wrt/`: Web Runtime Tests
 * `misc/`: miscellaneous tests
-  * `web-abat-tests` and `web-mbat-tests`: basic acceptance tests
-  * `wrt-stab*-tests`: stability tests
-  * `wrt-*-UA-tests`: user acceptance tests
+  * `web-abat-xwalk-tests` and `web-mbat-xwalk-tests`: basic acceptance tests
   * `wrt-documentation-verification-tests`: tests for documents verification
+* `stability/`: stability tests
 * `doc/`: see [documentaion](#Documentation) below
 * `tools/`: tools for this test suite
+
+Note that `TESTER-HOME-DIR` in this reposistory is a macro used for multiuser
+support. It should be replaced by a real home directory, e.g. `/home/app`,
+before running the test suite.
 
 ## Documentation
 
@@ -64,3 +67,4 @@ Or you can report an issue of the tests and/or tools in this JIRA system:
 Except as noted in `COPYING` and/or `NOTICE` files, or as headed with license
 info, test suite source code uses a BSD-style license that can be found in the
 `LICENSE` file.
+

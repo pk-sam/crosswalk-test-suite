@@ -30,15 +30,14 @@
 
 ###below functions just for crosswalk ivi testing###
 
-##usage: install_app $app_path(e.g. uninstall_app /home/app/content/tct/opt/tct-sp02-wrt-tests/tct-sp02-wrt-tests.wgt)##
+##usage: install_app $app_path(e.g. uninstall_app /home/tizen_user/content/tct/opt/tct-sp02-wrt-tests/tct-sp02-wrt-tests.wgt, note:tizen_user is the current device normal user, "app" user on ivi, "guest" user on tizen commom)##
 function install_app(){
     pkgcmd -i -t wgt -q -p $1
 }
 
 ##usage: uninstall_app $app_name(e.g. uninstall_app tct-sp02-wrt-tests)##
 function uninstall_app(){
-    pkgcmd -l >/tmp/apps.txt 2>&1
-    pkgids=`cat /tmp/apps.txt | grep $1 | awk -F '[],[]' '{print $4}'`
+    pkgids=`pkgcmd -l |grep $1 |awk -F 'pkgid' '{print $2}' |awk -F '[' '{print $2}'|awk -F ']' '{print $1}'`
     for pkgid in $pkgids
     do
         pkgcmd -u -t wgt -q -n $pkgid
@@ -47,10 +46,8 @@ function uninstall_app(){
 
 ##usage: find_app $app_name(e.g. uninstall_app tct-sp02-wrt-tests)##
 function find_app(){
-    pkgcmd -l >/tmp/apps.txt 2>&1
-    pkgids=`cat /tmp/apps.txt | grep $1 | awk -F '[],[]' '{print $4}'`
-    appid=`ail_list | grep $1`
-    appid=`echo $appid | awk '{print $1}'`
+    pkgids=`pkgcmd -l |grep $1 |awk -F 'pkgid' '{print $2}' |awk -F '[' '{print $2}'|awk -F ']' '{print $1}'`
+    appid=`app_launcher -l | grep $1 | awk '{print $2}'`
     appid=${appid:1:-1}
 }
 
@@ -58,8 +55,8 @@ function find_app(){
 function launch_app(){
     find_app $1
     pkgnum=`echo "$appid"|wc -w`
-    if [ $pkgnum -eq 1 ]; then
-        nohup open_app $appid &>/dev/null &
+    if [[ $pkgnum -eq 1 ]]; then
+        nohup app_launcher -s $appid &>/dev/null &
     else
         echo "launch error, please check if exists this app or there are more than one app with this app_name"
     fi

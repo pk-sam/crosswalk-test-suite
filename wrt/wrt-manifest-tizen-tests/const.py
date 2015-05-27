@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import sys, os
 import itertools, shutil
-
+Tizen_User = "app"
+if os.environ['TIZEN_USER']:
+  Tizen_User = os.environ['TIZEN_USER']
 path = os.path.abspath(__file__)
 path = os.path.split(path)[0]
 os.chdir(path)
@@ -24,7 +26,7 @@ report_file = report_path + "/wrt-manifest-tizen-tests.xml"
 report_summary_file = report_path + "/summary.xml"
 sh_path = path + "/script"
 log_path = report_path + "/log_"
-device_path = "/home/app/content/tct/"
+device_path = "/home/"+ Tizen_User +"/content/tct/"
 run_times = 3
 version="6.35.1.2"
 name="wrt-manifest-tizen-tests"

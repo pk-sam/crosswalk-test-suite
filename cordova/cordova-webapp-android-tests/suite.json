@@ -6,9 +6,7 @@
         "tests.css",
         "icon.png",
         "suite.json",
-        "inst.apk.py",
-        "config.xml",
-        "manifest.json"
+        "inst.apk.py"
     ],
     "pkg-list": {
         "cordova": {
@@ -17,7 +15,31 @@
             ],
             "copylist": {
                 "inst.apk.py": "inst.py",
-                "tests.xml": "tests.xml"
+                "PACK-TOOL-ROOT/cordova": "tools/cordova",
+                "webapp": "webapp",
+                "arch.txt": "arch.txt",
+                "mode.txt": "mode.txt",
+                "cordova-3.6": "cordova-version",
+                "tests.xml": "tests.xml",
+                "README":"README"
+            },
+            "pkg-app": {
+                "blacklist": []
+            }
+        },
+        "cordova4.0": {
+            "blacklist": [
+                "*"
+            ],
+            "copylist": {
+                "inst.apk.py": "inst.py",
+                "PACK-TOOL-ROOT/cordova_plugins/cordova-plugin-crosswalk-webview": "tools/cordova-plugin-crosswalk-webview",
+                "webapp": "webapp",
+                "arch.txt": "arch.txt",
+                "mode.txt": "mode.txt",
+                "cordova-4.0": "cordova-version",
+                "tests.xml": "tests.xml",
+                "README":"README"
             },
             "pkg-app": {
                 "blacklist": []

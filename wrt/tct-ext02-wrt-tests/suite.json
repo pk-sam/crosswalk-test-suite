@@ -53,8 +53,31 @@
                 },
                 "test-hosted-widget-with-invalid-tizencontent": {
                     "sign-flag": "true"
+                },
+                "application-required-version-support-by-system-version": {
+                    "sign-flag": "true"
+                },
+                "application-required-version-support-not-float-value1": {
+                    "sign-flag": "true"
+                },
+                "application-required-version-support-not-float-value2": {
+                    "sign-flag": "true"
+                },
+                "application-required-version-support-no-version": {
+                    "sign-flag": "true"
+                },
+                "application-required-version-support-version-empty": {
+                    "sign-flag": "true"    
+                },
+                "application-required-version-support-eqs-current": {
+                    "sign-flag": "true"
+                },
+                "application-required-version-support-gts-current": {
+                    "sign-flag": "true"
+                },
+                "application-required-version-support-gts-current-to-lts": {
+                    "sign-flag": "true"
                 }
-                
             }
         }
     },

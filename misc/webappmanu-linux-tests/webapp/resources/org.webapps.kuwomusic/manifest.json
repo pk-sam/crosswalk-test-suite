@@ -1,0 +1,5 @@
+{
+  "name": "deepin-webapps-kuwo-music",
+  "xwalk_version": "0.0.1",
+  "start_url": "http://player.kuwo.cn/webmusic/play"
+}

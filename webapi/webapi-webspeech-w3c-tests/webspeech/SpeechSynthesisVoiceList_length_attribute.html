@@ -32,13 +32,11 @@ Authors:
 //==== LABEL Check if length attribute of SpeechSynthesisVoiceList is writable
 //==== PRIORITY P1
 //==== SPEC Tizen Web API:Speech:SpeechSynthesisVoiceList:length A
-//==== SPEC_URL https://dvcs.w3.org/hg/webspeech-api/raw-file/tip/webspeechapi.html#SpeechSynthesisVoiceList
+//==== SPEC_URL https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html#SpeechSynthesisVoiceList
 //==== TEST_CRITERIA AE AT ARO
 
 test(function () {
-    var webspeech, webspeechSynthesisList;
-    webspeech = window.webspeechSynthesis;
-    webspeechSynthesisList = webspeech.getVoices();
+    var webspeechSynthesisList = speechSyn.getVoices();
     assert_true("length" in webspeechSynthesisList, "length is not exist in webspeechSynthesisList") ;
     check_attribute(webspeechSynthesisList, "length", webspeechSynthesisList.length, "number", 100);
 }, document.title);

@@ -14,8 +14,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PKG_NAME = os.path.basename(SCRIPT_DIR)
 PARAMETERS = None
 #XW_ENV = "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/5000/dbus/user_bus_socket"
-SRC_DIR = "/home/app/content"
-PKG_SRC_DIR = "%s/tct/opt/%s" % (SRC_DIR, PKG_NAME)
+SRC_DIR = ""
+PKG_SRC_DIR = ""
 
 
 def doCMD(cmd):
@@ -43,10 +43,10 @@ def updateCMD(cmd=None):
     return cmd
 def getUSERID():
     if PARAMETERS.mode == "SDB":
-        cmd = "sdb -s %s shell id -u %s" % ( 
+        cmd = "sdb -s %s shell id -u %s" % (
             PARAMETERS.device, PARAMETERS.user)
     else:
-        cmd = "ssh %s \"id -u %s\"" % ( 
+        cmd = "ssh %s \"id -u %s\"" % (
             PARAMETERS.device, PARAMETERS.user )
     return doCMD(cmd)
 
@@ -65,16 +65,9 @@ def getPKGID(pkg_name=None):
 
     test_pkg_id = None
     for line in output:
-        pkg_infos = line.split()
-        if len(pkg_infos) == 4:
-            continue
-        name = pkg_infos[5]
-        name = name.lstrip('[').rstrip(']')
-        print "name is: %s" % name
-        if pkg_name == name:
-            test_pkg_id = pkg_infos[3]
-            test_pkg_id = test_pkg_id.lstrip('[').rstrip(']')
-            print test_pkg_id
+        if line.find("[" + pkg_name + "]") != -1:
+            pkgidIndex = line.split().index("pkgid")
+            test_pkg_id = line.split()[pkgidIndex+1].strip("[]")
             break
     return test_pkg_id
 
@@ -170,7 +163,7 @@ def instPKGs():
             item_name = os.path.basename(item)
             if not doRemoteCopy(item, "%s/%s" % (PKG_SRC_DIR, item_name)):
                 action_status = False
-    (return_code, output) = doRemoteCMD("chmod 777 /home/app/content/tct/opt/tct-ext02-wrt-tests/scripts/WRTInstaller")
+    (return_code, output) = doRemoteCMD("chmod 777 /home/%s/content/tct/opt/tct-ext02-wrt-tests/scripts/WRTInstaller" % PARAMETERS.user)
     return action_status
 
 
@@ -196,6 +189,10 @@ def main():
 
     if not PARAMETERS.user:
         PARAMETERS.user = "app"
+    global SRC_DIR, PKG_SRC_DIR
+    SRC_DIR = "/home/%s/content" % PARAMETERS.user
+    PKG_SRC_DIR = "%s/tct/opt/%s" % (SRC_DIR, PKG_NAME)
+
     if not PARAMETERS.mode:
         PARAMETERS.mode = "SDB"
 

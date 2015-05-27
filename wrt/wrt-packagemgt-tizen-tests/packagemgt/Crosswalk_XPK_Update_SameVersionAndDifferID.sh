@@ -27,32 +27,54 @@
 #
 #Authors:
 #       IVAN CHEN <yufeix.chen@intel.com>
-
+#       Yin, Haichao <haichaox.yin@intel.com>
 
 local_path=$(cd $(dirname $0);pwd)
 source $local_path/Common
 xpk_path=$local_path/../testapp
+originalAppName="update_original_versionOne_tests"
+diffIdSameVersionAppName="diffid_same_version_tests"
 
-func_check_xwalkservice
+#func_check_xwalkservice
 
 # install original xpk
-install_origin_xpk  $xpk_path/update_original_versionOne_tests.xpk
-
-#update valid xpk and check DB
-exist_id=`pkgcmd -l | grep "diffid_same_version_tests" | awk '{print $4}'`
-exist_id=`echo $app_id | awk '{print $1}'`
-exist_id=${app_id:1:-1}
-[ -n $exist_id ] & pkgcmd -u -n  $exist_id -q
-pkgcmd -i -t xpk -p $xpk_path/diffid_same_version_tests.xpk -q &> /tmp/install
-cat /tmp/install | grep "ok"
-if [[ $? -ne 0 ]]; then
-    echo "The diffid_same_version_tests xpk  install failure."  
-    exit 1
+getPkgid $originalAppName
+get_uninstall=`pkgcmd -u -n $pkg_id -q`
+get_install=`pkgcmd -i -t xpk -p  $xpk_path/$originalAppName.xpk -q`
+getAppid $originalAppName
+if [[ -n $app_id ]]; then
+                echo "Install $originalAppName xpk Pass"
+        else
+                echo "Install $originalAppName xpk Fail"
+                exit 1
 fi
- uninstall_xpk $app_id
- #get app id
- get_app_id
+# install diff id and same version xpk
+getPkgid $diffIdSameVersionAppName
+get_uninstall=`pkgcmd -u -n  $pkg_id -q`
+get_install=`pkgcmd -i -t xpk -p $xpk_path/$diffIdSameVersionAppName.xpk -q`
+getAppid $diffIdSameVersionAppName
+if [[ -n $app_id ]]; then
+                echo "Install $diffIdSameVersionAppName xpk Pass"
+        else
+                echo "Install $diffIdSameVersionAppName xpk Fail"
+                exit 1
+fi
+getPkgid $originalAppName
+get_uninstall=`pkgcmd -u -n $pkg_id -q`
+getAppid $originalAppName
+if [[ ! -n $app_id ]]; then
+                echo "Uninstall $originalAppName xpk Pass"
+        else
+                echo "Uninstall $originalAppName xpk Fail"
+                exit 1
+fi
 
- uninstall_xpk $app_id
-
- exit 0
+getPkgid $diffIdSameVersionAppName
+get_uninstall=`pkgcmd -u -n $pkg_id -q`
+getAppid $diffIdSameVersionAppName
+if [[ ! -n $app_id ]]; then
+                echo "Uninstall $diffIdSameVersionAppName xpk Pass"
+        else
+                echo "Uninstall $diffIdSameVersionAppName xpk Fail"
+                exit 1
+fi

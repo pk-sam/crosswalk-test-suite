@@ -17,6 +17,9 @@
             "blacklist": [],
             "copylist": {
                 "inst.apk.py": "inst.py",
+                "resourcetiming/w3c/submission/resources/cgi": "resourcetiming/w3c/submission/resources",
+                "PACK-TOOL-ROOT/resources/testharness": "resources",
+                "PACK-TOOL-ROOT/resources/webrunner": "webrunner",
                 "tests.full.xml": "tests.full.xml",
                 "tests.xml": "tests.xml"
             },
@@ -26,12 +29,19 @@
             }
         },
         "apk-aio, cordova-aio": {
-            "blacklist": []
+            "blacklist": [],
+            "copylist": {
+                "PACK-TOOL-ROOT/resources/testharness": "resources",
+                "PACK-TOOL-ROOT/resources/webrunner": "webrunner"
+            }
         },
         "wgt": {
             "blacklist": [],
             "copylist": {
                 "inst.wgt.py": "inst.py",
+                "resourcetiming/w3c/submission/resources/cgi": "resourcetiming/w3c/submission/resources",
+                "PACK-TOOL-ROOT/resources/testharness": "resources",
+                "PACK-TOOL-ROOT/resources/webrunner": "webrunner",
                 "tests.full.xml": "tests.full.xml",
                 "tests.xml": "tests.xml"
             },
@@ -44,6 +54,9 @@
             "blacklist": [],
             "copylist": {
                 "inst.xpk.py": "inst.py",
+                "resourcetiming/w3c/submission/resources/cgi": "resourcetiming/w3c/submission/resources",
+                "PACK-TOOL-ROOT/resources/testharness": "resources",
+                "PACK-TOOL-ROOT/resources/webrunner": "webrunner",
                 "tests.full.xml": "tests.full.xml",
                 "tests.xml": "tests.xml"
             },

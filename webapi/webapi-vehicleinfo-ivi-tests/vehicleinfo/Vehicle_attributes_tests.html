@@ -27,32 +27,59 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Authors:
         Liu,xin <xinx.liu@intel.com>
+        Xu, Kang <kangx.xu@intel.com>
 
 -->
 
 <meta charset="utf-8">
-<title>Vehicle Test: Vehicle_attributes</title>
+<title>Vehicle Test: Vehicle - attributes</title>
 <link rel="author" title="Intel" href="http://www.intel.com">
-<link rel="help" href="http://rawgit.com/w3c/automotive-bg/master/vehicle_spec.html" />
+<link rel="help" href="http://rawgit.com/w3c/automotive-bg/master/data_spec.html">
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
+<script src="support/support.js"></script>
 <div id="log"></div>
 <script>
 
-test(function() {
-  assert_true("vehicle" in tizen);
-}, "Check if navigator.vehicle exists");
-
-test(function() {
-  assert_true("vehicleSpeed" in tizen.vehicle);
-}, "Check if vehicle.vehicleSpeed exists");
-
-test(function() {
-  assert_true("climateControl" in tizen.vehicle);
-}, "Check if vehicle.climateControl exists");
-
-test(function() {
-  assert_true("door" in tizen.vehicle);
-}, "Check if vehicle.door exists");
+[
+  "vehicleSpeed",
+  "climateControl",
+  "door",
+  "wheelSpeed",
+  "engineSpeed",
+  "powerTrainTorque",
+  "acceleratorPedalPosition",
+  "throttlePosition",
+  "tripMeters",
+  "transmission",
+  "cruiseControlStatus",
+  "lightStatus",
+  "interiorLightStatus",
+  "horn",
+  "chime",
+  "fuel",
+  "engineOil",
+  "acceleration",
+  "engineCoolant",
+  "steeringWheel",
+  "ignitionTime",
+  "yawRate",
+  "brakeOperation",
+  "wheelTick",
+  "buttonEvent",
+  "drivingMode",
+  "nightMode",
+  "odometer",
+  "transmissionClutch",
+  "washerFluid",
+  "malfunctionIndicator",
+  "batteryStatus",
+  "tire",
+  "diagnostic"
+].forEach(function (attr) {
+  test(function () {
+    assert_true(attr in vehicle, "the Vehicle." + attr + " exists");
+  }, "Check if Vehicle." + attr + " exists");
+});
 
 </script>

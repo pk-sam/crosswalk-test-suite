@@ -1,0 +1,17 @@
+{
+    "xwalk_version": "0.1",
+    "name": "usecase-webapi-xwalk-tests",
+    "xwalk_description": "WebAPIUsecase",
+    "xwalk_permissions": [
+        "Contacts",
+        "Geolocation",
+        "Vibration"
+    ],
+    "start_url": "index.html",
+    "gcm_sender_id": "941579076696",
+    "gcm_user_visible_only": true,
+    "icons": [{
+        "src": "icon.png",
+        "sizes": "128x128"
+    }]
+}

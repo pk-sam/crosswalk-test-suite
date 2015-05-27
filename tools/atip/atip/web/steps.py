@@ -27,33 +27,39 @@
 #         Fan, Yugang <yugang.fan@intel.com>
 
 from behave import step
+import time
+import datetime
 try:
     from urlparse import urljoin, urlparse
 except ImportError:
     from urllib.parse import urljoin, urlparse
 
+
 def get_page_url(context, text):
     url = ''
     test_prefix = ''
     try:
+        test_platform = context.app.app_config["platform"]["name"].upper()
         url_components = urlparse(context.app.current_url())
-        if str(context.app.app_config).upper().find('TIZEN') >= 0: 
-           test_prefix = '%s://%s//' % (url_components.scheme, url_components.netloc)
-        elif str(context.app.app_config).upper().find('ANDROID') >= 0: 
-           if url_components.scheme == 'http':
-              test_prefix = '%s://%s/' % (url_components.scheme,url_components.netloc)
-    except Exception, e: 
+        if test_platform == 'TIZEN':
+            test_prefix = '%s://%s//' % (url_components.scheme,
+                                         url_components.netloc)
+        elif test_platform == 'ANDROID':
+            if url_components.scheme == 'http':
+                test_prefix = '%s://%s/' % (url_components.scheme,
+                                            url_components.netloc)
+    except Exception as e:
         print "Failed to get page url: %s" % e
         return None
     try:
         nPos = text[0]
-        while nPos == '/' :
+        while nPos == '/':
             text = text[1:]
             nPos = text[0]
-    except Exception, e:
-        print  "Test page URL error: %s" % e
+    except Exception as e:
+        print "Test page URL error: %s" % e
         return None
-    url = "%s%s" % (test_prefix,text)  
+    url = "%s%s" % (test_prefix, text)
     return url
 
 
@@ -80,7 +86,7 @@ def go_forward(context):
 
 @step(u'The current URL should be "{text}"')
 def url_should_be_text(context, text):
-    url = get_page_url(context, text)
+    url = urljoin(context.app.url_prefix, text)
     assert context.app.current_url().upper() == url.upper()
 
 
@@ -122,9 +128,19 @@ def i_press(context, key):
     assert context.app.press_element_by_key(key)
 
 
+@step(u'press "{key_c}" in "{key_p}"')
+def i_press(context, key_p, key_c):
+    assert context.app.press_element_by_keys(key_p, key_c)
+
+
 @step(u'I click "{key}"')
 def i_click(context, key):
     assert context.app.click_element_by_key(key)
+
+
+@step(u'click "{key_c}" in "{key_p}"')
+def i_click_keys(context, key_p, key_c):
+    assert context.app.click_element_by_keys(key_p, key_c)
 
 
 @step(u'I click coords {x:d} and {y:d} of "{key}"')
@@ -135,6 +151,16 @@ def i_click_coords(context, x, y, key):
 @step(u'I fill in "{key}" with "{text}"')
 def fill_with_text(context, key, text):
     assert context.app.fill_element_by_key(key, text)
+
+
+@step(u'I click the link "{text}"')
+def click_element_by_link(context, text):
+    element = context.app.driver.find_element_by_link_text(text)
+    hyperl = element.get_attribute('href')
+    if element:
+        element.click()
+        return True
+    return False
 
 
 @step(u'I check "{key}"')
@@ -165,3 +191,109 @@ def i_accept_alert(context):
 @step(u'I should see an alert with text "{text}"')
 def should_see_alert_text(context, text):
     assert context.app.get_alert_text() == text, u'Text was not found'
+
+
+@step(u'I wait {n:d} seconds')
+def wait_senconds(context,n):
+   time.sleep(n)
+
+
+@step(u'I go to frame "{key}"')
+def i_visit_frame(context, key):
+    context.app.driver.switch_to_frame(key)
+    assert True
+
+
+@step(u'I go out of frame')
+def i_jump_frame(context):
+    context.app.driver.switch_to_default_content()
+    assert True
+
+
+@step(u'I should see nothing in "{attr}" attr of "{key}" area')
+def check_text_by_key(context, attr, key):
+    elements = context.app.driver.find_elements_by_id(key)
+    if len(elements) == 1 and elements[0].get_attribute(attr) == "":
+        assert True
+    else:
+        assert False
+
+
+@step(u'I should see "{text}" with "{color}" color in "{key}" area')
+def should_see_text_element_with_color(context, text, key, color):
+    assert context.app.check_normal_text_element_timeout_with_color(
+        text, key, color), u'The text or color is wrong'
+
+
+@step(u'I should see "{key}" area in "{color}" color')
+def should_see_text_element_with_color(context, key, color):
+    assert context.app.check_normal_element_timeout_with_color(
+        key, color), u'The color is wrong'
+
+
+@step(u'I verify value in "{key}" is "{expecttype}" type')
+def check_type_by_key(context, key, expecttype):
+    typename = context.app.check_content_type(key, display=True)
+    if typename == expecttype:
+        assert True
+    else:
+        assert False
+
+
+@step(u'I save div "{key}" as "{pic_name}" with width "{width}" and height "{height}"')
+def save_div(context, key, pic_name, width, height):
+    assert context.app.save_div_as_picture(key, pic_name, width, height)
+
+
+@step(u'I save div "{key}" as "{pic_name}"')
+def save_div(context, key, pic_name):
+    assert context.app.save_div_as_picture(key, pic_name, width=0, height=0)
+
+
+@step(u'I remove all the pictures')
+def remove_pic(context):
+    assert context.app.remove_picture()
+
+
+@step(u'I save the page to "{pic_name}"')
+def save_page_per_conf(context, pic_name):
+    assert context.app.save_page_per_conf(pic_name)
+
+@step(u'I save the screenshot md5 as "{pic_name}"')
+def save_page_as_base64(context, pic_name):
+    assert context.app.save_base64_md5_pic(pic_name)
+
+@step(u'file "{file_name}" of baseline and result should be the same')
+def check_md5_file(context, file_name):
+    assert context.app.check_md5_file_same(file_name)
+
+
+@step(u'pic "{pic_name}" of baseline and result should be "{similarity}" similar if have results')
+def check_base_result_similarity(context, pic_name, similarity):
+    assert context.app.check_base_result_similarity(pic_name, similarity)
+
+
+@step(u'I save "{p_name}" from "{key}" area')
+def check_type_by_key(context, p_name, key):
+    assert context.app.save_content(p_name, key)
+
+
+@step(u'I click element with id "{key}" by js')
+def click_button_by_js(context, key):
+    assert context.app.click_element_by_id_with_js(key)
+
+
+@step(u'I fill in element "{key}" by "{attr}" with "{text}"')
+def fill_element_by_attr_with_text(context, key, attr, text):
+    assert context.app.fill_element_by_key_attr(key, attr, text)
+
+
+@step(u'"{second}" should be greater than "{first}"')
+def check_type_by_key(context, first, second):
+    assert context.app.compare_two_values(first, second), u'The second value is less than the first one'
+
+
+@step(u'I should not see "{text}" in "{key}" area')
+def should_see_text_element(context, text, key):
+    assert context.app.check_normal_text_element_not_exist(
+        text, key, display=True), u'Text exists!'

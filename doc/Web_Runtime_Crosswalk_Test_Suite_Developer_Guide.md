@@ -1,22 +1,6 @@
 # Web Runtime Crosswalk Test Suite DeveloperGuide
 
-Version 1.0
-
-Copyright © 2014 Intel Corporation. All rights reserved. No portions of this document may be reproduced without the written permission of Intel Corporation.
-
-Intel is a trademark of Intel Corporation in the U.S. and/or other countries.
-
-Linux is a registered trademark of Linus Torvalds.
-
-Tizen® is a registered trademark of The Linux Foundation.
-
-ARM is a registered trademark of ARM Holdings Plc.
-
-\*Other names and brands may be claimed as the property of others.
-
-Any software source code reprinted in this document is furnished under a software license and may only be used or copied in accordance with the terms of that license.
-
-#1. Overview
+## 1. Overview
 
 This document is intended for developers who contribute WebAPI test cases development.
 
@@ -28,7 +12,7 @@ You are supposed to have gained the following knowledge:
 
     Note: Testkit-lite is a test execution framework. For details, see [https://github.com/testkit/testkit-lite](https://github.com/testkit/testkit-lite).
 
-#2. Test Suite Source Layout
+## 2. Test Suite Source Layout
 
 The layout of test source codes should:
 
@@ -109,13 +93,13 @@ The test suite source layout is detailed as follows:
   - [common]/: (optional) integrated from [https://github.com/w3c/web-platform-tests/tree/master/common](https://github.com/w3c/web-platform-tests/tree/master/common) to include common test functions
   - resources/: integrated from [https://github.com/w3c/testharness.js](https://github.com/w3c/testharness.js) to include W3C test harness as an API test framework
 
-- Build/pack support: 
+- Build/pack support:
   - autogen, configure.ac, and Makefile.am
-  - pack.sh: script for generating a zip package 
+  - pack.sh: script for generating a zip package
   - inst.wgt.py: script for installing the wgt package on Tizen IVI device.
   - inst.sh.wgt: script for installing the wgt package on Tizen mobile.
   - inst.sh.xpk: script for installing the xpk package on Tizen mobile.
-  - config.xml.crx: configuration file for creating a .crx extension 
+  - config.xml.crx: configuration file for creating a .crx extension
   - config.xml.wgt: configuration file for creating a .wgt package
   - icon.png: Widget/Extension icon
   - manifest.json: manifest file for creating a .crx extension
@@ -126,9 +110,9 @@ The test suite source layout is detailed as follows:
 
 - Misc:
   - [utils]/: (optional) contains utilities and tools if any
-  - [data]/: (optional) contains small-sized data files (Large-sized data such as media content requires a separate package.) 
-  - Small-sized data files (a few Kbytes) should be included into the tests. Large-sized files should be made available separately. Instructions on how to obtain the data files must be provided in the README file. 
-  - Test data must be publicly available. 
+  - [data]/: (optional) contains small-sized data files (Large-sized data such as media content requires a separate package.)
+  - Small-sized data files (a few Kbytes) should be included into the tests. Large-sized files should be made available separately. Instructions on how to obtain the data files must be provided in the README file.
+  - Test data must be publicly available.
 
 The following files and folders are mandatory in :
 
@@ -152,52 +136,32 @@ The following files and folders are mandatory in :
 - tests.full.xml
 - <wrt-xxx-tizen-tests.spec\>
 
-#3. Test Case Coding Style
+## 3. Test Case Coding Style
 
-Test case developers shall follow the following rules:
+Refer to the `Coding_Style_Guide_CheatSheet.md`.
 
-- Comment each code block in a uniform way
-- Return a clear pass/fail result 
-- Clean environment before exiting tests
-- Automate test under condition of stability 
-- Keep test cases independent from each other 
-- Keep case independent from UX or vertical specific applications 
-- Avoid complicated code logic (comment it if unavoidable) 
-- Avoid duplicated code 
-- Remove redundant code 
-
-Please refer to the **Coding\_Style\_Guide\_CheatSheet\_v1.0** to get a quick start.
-
-You can find detailed coding style instructions for specific languages from:
-
-1)CSS & HTML: [http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml)
-2)JavaScript: [http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
-3)Python: [http://google-styleguide.googlecode.com/svn/trunk/pyguide.html](http://google-styleguide.googlecode.com/svn/trunk/pyguide.html)
-4)Shell: [http://google-styleguide.googlecode.com/svn/trunk/shell.xml](http://google-styleguide.googlecode.com/svn/trunk/shell.xml)
-5)XML: 'xmllint --format' with default indent 2 spaces. See [http://xmlsoft.org/xmllint.html](http://xmlsoft.org/xmllint.html)
-
-#4. Test Case Naming Convention
+## 4. Test Case Naming Convention
 
 **Template**
 
 A test case should be named as per the following conventions:
 
 - Use Feature name
-- Use '\_' to connect words in file names 
+- Use '\_' to connect words in file names
 
 **Examples**
 
 packagemgt\Crosswalk_XPK_Update_VersionOneToMultiLower.html
 
-#5. Test Case Folder Naming Convention
+## 5. Test Case Folder Naming Convention
 
 A test case folder should be named as per the following conventions:
 
 - Allow only letter, digit, and hyphen in test case folder name.
-- For folder name, please also use lower-case with '-' if necessary. 
+- For folder name, please also use lower-case with '-' if necessary.
 - Name <testcasefolder\> as a feature, component.
 
-#6. Test Case Classification (<testcase\> field in tests.xml)
+## 6. Test Case Classification (<testcase\> field in tests.xml)
 
 **Template**
 
@@ -213,9 +177,9 @@ Test case created should be classified by the following rules:
   - approved: test case is reviewed and qualified to be released; currently only use this status when merge tests into test suites.
 
 - Component: should comply with the WRT component name list.
-- Execution\_type: 
-  - auto: 
-  - manual: 
+- Execution\_type:
+  - auto:
+  - manual:
 
 - Priority: P0/P1/P2/P3
   - P0: use cases for feature to be tested, WRT use cases; P0 tests will be used in sanity testing.
@@ -227,16 +191,16 @@ Test case created should be classified by the following rules:
 
 **Example**
 
- <testcase purpose="Validate if the web app can show 'text' when settings language is set to English" type="Functional" status="approved" component="Crosswalk I18n" execution_type="manual" priority="P1" id="Crosswalk_I18n_TestEn">
-        <description>
-          <pre_condition>
-            1.Make sure Crosswalk application is launched.
-          </pre_condition>
-          <test_script_entry>/opt/wrt-i18nmanu-tizen-tests/i18n/Crosswalk_I18n_TestEn.html</test_script_entry>
-        </description>
-      </testcase>
+    <testcase purpose="Validate if the web app can show 'text' when settings language is set to English" type="Functional" status="approved" component="Crosswalk I18n" execution_type="manual" priority="P1" id="Crosswalk_I18n_TestEn">
+      <description>
+        <pre_condition>
+          Make sure Crosswalk application is launched.
+        </pre_condition>
+        <test_script_entry>/opt/wrt-i18nmanu-tizen-tests/i18n/Crosswalk_I18n_TestEn.html</test_script_entry>
+       </description>
+    </testcase>
 
-#7. How to Add New Test Suite to WRT 
+## 7. How to Add New Test Suite to WRT
 To add a new suite to wrt, perform the following steps:
 
 1)Fork and clone the wrt project from
@@ -252,7 +216,7 @@ https://github.com/crosswalk-project/wrt
     commondir =  resources webrunner i18n
     SUBDIRS = $(commondir)
     docdir = /opt/wrt-i18nmanu-tizen-tests
-    dist_doc_DATA = Changelog COPYING README tests.xml tests.full.xml
+    dist_doc_DATA = COPYING README tests.xml tests.full.xml
 
 4)Replace folder with real test case folder name used in configure.ac:
 
@@ -267,17 +231,17 @@ https://github.com/crosswalk-project/wrt
 5)Update config.xml.wgt:
 
     <widget id='http://tizen.org/test/wrt-i18nmanu-tizen-tests' xmlns='http://www.w3.org/ns/widgets' xmlns:tizen='http://tizen.org/ns/widgets' version='1.0.0.1'>
-  <access origin="*"/>
-  <icon src="icon.png" height="117" width="117"/>
-  <name>wrt-i18nmanu-tizen-tests</name>
-  <tizen:application id="i18ntestcs.wrti18ntizentests" package="i18ntestcs" required_version="2.2"/>
-  <tizen:setting screen-orientation="landscape"/>
+      <access origin="*"/>
+      <icon src="icon.png" height="117" width="117"/>
+      <name>wrt-i18nmanu-tizen-tests</name>
+      <tizen:application id="i18ntestcs.wrti18ntizentests" package="i18ntestcs" required_version="2.2"/>
+      <tizen:setting screen-orientation="landscape"/>
     </widget>
-    
 
-6)Add new cases to the test suite. 
 
-#8 How to Contribute New Cases to Test Suite Package
+6)Add new cases to the test suite.
+
+## 8 How to Contribute New Cases to Test Suite Package
 
 To contribute new cases to test suite package, perform the following steps:
 
@@ -297,13 +261,9 @@ Note:
 
 **Example**
 
-<html>
-  <head>
     <meta charset='utf-8'>
     <title>Crosswalk_I18n_AppNameChinese_Test</title>
     <link rel="author" title="Intel" href="http://www.intel.com">
-  </head>
-  <body>
     <p>
       <strong>Test steps:</strong>
     </p>
@@ -320,25 +280,24 @@ Note:
       <li>The device language is set to Chinese successfully</li>
       <li>Web app name with Chinese and launch successfuly</li>
     </ol>
-  </body>
-</html>
 
-#9 How to Contribute pairwise Cases to Test Suite Package
+## 9 How to Contribute pairwise Cases to Test Suite Package
+
 - Install  AllPairs
 
   - Download AllPairs from here:
-   
+
      http://sourceforge.net/projects/allpairs/
-     
+
   - Copy metacomm folder to your suite:
      metacomm/
-     
+
   - import metacomm in your python file:
-    
+
     import metacomm.combinatorics.all_pairs2
-   
+
   -  all_pairs sample:
-  
+
      list=[[1,2],[3]]
      input_pair = all_pairs( list )
      for e, v in enumerate(input_pair):
@@ -348,46 +307,46 @@ Note:
 ....1 [2, 3]
 
 
-#Appendix 1 Tests.full.xml and tests.xml
+## Appendix 1 Tests.full.xml and tests.xml
 Each test suite package has two dedicated .xml files (tests.full.xml and tests.xml), which defines all test cases in the package.
 Tests.xml is a simplified version of tests.full.xml; it contains the minimum required elements when running the tests.
 Note: The .xml files must comply with the rules in the test\_definition.xsd file. For details, see  [https://github.com/testkit/testkit-lite/blob/master/xsd/test\_definition.xsd](https://github.com/testkit/testkit-lite/blob/master/xsd/test_definition.xsd).
 
 Tests.full.xml Example:
 
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="./testcase.xsl"?>
-<test_definition>
-  <suite name="wrt-i18nmanu-tizen-tests" category="Crosswalk_I18n" launcher="xwalk">
-    <set name="i18n" type="js">
-      <testcase purpose="Validate if the web app can show 'Web' Test when settings language is set to English" type="Functional" status="approved" component="Crosswalk I18n" execution_type="manual" priority="P1" id="Crosswalk_I18n_TestEn">
-        <description>
-          <pre_condition>
-            1.Make sure Crosswalk application is launched.
-          </pre_condition>
-          <test_script_entry>/opt/wrt-i18nmanu-tizen-tests/i18n/Crosswalk_I18n_TestEn.html</test_script_entry>
-        </description>
-      </testcase>
-    </set>
-  </suite>
-</test_definition>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml-stylesheet type="text/xsl" href="./testcase.xsl"?>
+    <test_definition>
+      <suite name="wrt-i18nmanu-tizen-tests" category="Crosswalk_I18n" launcher="xwalk">
+        <set name="i18n" type="js">
+          <testcase purpose="Validate if the web app can show 'Web' Test when settings language is set to English" type="Functional" status="approved" component="Crosswalk I18n" execution_type="manual" priority="P1" id="Crosswalk_I18n_TestEn">
+            <description>
+              <pre_condition>
+                Make sure Crosswalk application is launched.
+              </pre_condition>
+              <test_script_entry>/opt/wrt-i18nmanu-tizen-tests/i18n/Crosswalk_I18n_TestEn.html</test_script_entry>
+            </description>
+          </testcase>
+        </set>
+      </suite>
+    </test_definition>
 
 Tests.xml Example.
 
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="./testcase.xsl"?>
-<test_definition>
-  <suite category="Crosswalk_I18n" launcher="xwalk" name="wrt-i18nmanu-tizen-tests">
-    <set name="i18n" type="js">
-      <testcase component="Crosswalk I18n" execution_type="manual" id="Crosswalk_I18n_TestEn" purpose="Validate if the web app can show 'Web' Test when settings language is set to English">
-        <description>
-          <pre_condition>
-            1.Make sure Crosswalk application is launched.
-          </pre_condition>
-          <test_script_entry>/opt/wrt-i18nmanu-tizen-tests/i18n/Crosswalk_I18n_TestEn.html</test_script_entry>
-        </description>
-      </testcase>
-     </set>
-  </suite>
-</test_definition>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml-stylesheet type="text/xsl" href="./testcase.xsl"?>
+    <test_definition>
+      <suite category="Crosswalk_I18n" launcher="xwalk" name="wrt-i18nmanu-tizen-tests">
+        <set name="i18n" type="js">
+          <testcase component="Crosswalk I18n" execution_type="manual" id="Crosswalk_I18n_TestEn" purpose="Validate if the web app can show 'Web' Test when settings language is set to English">
+            <description>
+              <pre_condition>
+                Make sure Crosswalk application is launched.
+              </pre_condition>
+              <test_script_entry>/opt/wrt-i18nmanu-tizen-tests/i18n/Crosswalk_I18n_TestEn.html</test_script_entry>
+            </description>
+          </testcase>
+         </set>
+      </suite>
+    </test_definition>
 

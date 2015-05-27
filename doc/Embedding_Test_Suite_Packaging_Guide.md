@@ -1,21 +1,5 @@
 # EmbeddingAPI Test Suite Packaging Guide
 
-Version 1.0
-
-Copyright © 2014 Intel Corporation. All rights reserved. No portions of this document may be reproduced without the written permission of Intel Corporation.
-
-Intel is a trademark of Intel Corporation in the U.S. and/or other countries.
-
-Linux is a registered trademark of Linus Torvalds.
-
-Tizen® is a registered trademark of The Linux Foundation.
-
-ARM is a registered trademark of ARM Holdings Plc.
-
-\*Other names and brands may be claimed as the property of others.
-
-Any software source code reprinted in this document is furnished under a software license and may only be used or copied in accordance with the terms of that license.
-
 ## Overview
 
 This document provides method to pack test suite packages for EmbeddingAPI. Currently the target platform is Android. Please use the following shell script to generate test suite packages.
@@ -52,20 +36,32 @@ $sudo apt-get install ant
 
 ## Pack EmbeddingAPI Test Suite Packages
 
-There is a pack.sh script in each test suite. Currently it supports a test suite package in the type of APK, in .zip, for Android platform.
+There is a pack.py script in crosswalk-test-suite/tools/build/. Currently it supports the embeddingapi test suite package in the type of APK, in .zip, for Android platform.
 
 - Download the latest crosss webview bundle from the following link:
 
 [https://download.01.org/crosswalk/releases/crosswalk/android/beta/](https://download.01.org/crosswalk/releases/crosswalk/android/beta/)
 
-- Copy crosswalk-webview-xxxx and rename it to /crosswalk-webview folder
+- Put crosswalk-webview-xxxx in crosswalk-test-suite/tools/ and rename it to /crosswalk-webview folder
 
 - Download the embeddingapi test suit from the following link:
 
-[https://github.com/crosswalk-project/crosswalk-test-suite/tree/master/embeddingapi/webapi-embeddingapi-xwalk-tests](https://github.com/crosswalk-project/crosswalk-test-suite/tree/master/embeddingapi/webapi-embeddingapi-xwalk-tests)
+[https://github.com/crosswalk-project/crosswalk-test-suite/tree/master/embeddingapi/embedding-api-android-tests](https://github.com/crosswalk-project/crosswalk-test-suite/tree/master/embeddingapi/embedding-api-android-tests)
 
 - Pack APK packages:
 
-$ cd webapi-embeddingapi-xwalk-tests
+  - Pack all version APKs to one package
 
-$ ./pack.sh
+    $ cd embedding-api-android-tests
+
+    $ ../../tools/build/pack.py -t embeddingapi
+
+  - Pack the first few version APKs to one package, take 3 as an example, it packs v1, v2, and v3 version apks to one package, and so on 
+
+    $ cd embedding-api-android-tests
+
+    $ ../../tools/build/pack.py -t embeddingapi --sub-version v3
+
+
+
+

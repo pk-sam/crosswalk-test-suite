@@ -1,0 +1,5 @@
+{
+  "name": "deepin-webapps-doit-im",
+  "xwalk_version": "0.0.1",
+  "start_url": "http://doit.im"
+}

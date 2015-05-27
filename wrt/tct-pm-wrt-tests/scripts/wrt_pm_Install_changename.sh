@@ -1,30 +1,38 @@
 #!/bin/bash
 #
-# Copyright (C) 2010 Intel Corporation
+# Copyright (C) 2013 Intel Corporation
 #
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# * Redistributions of works must retain the original copyright notice, this list
+#   of conditions and the following disclaimer.
+# * Redistributions in binary form must reproduce the original copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+# * Neither the name of Intel Corporation nor the names of its contributors
+#   may be used to endorse or promote products derived from this work without
+#   specific prior written permission.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# THIS SOFTWARE IS PROVIDED BY INTEL CORPORATION "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL INTEL CORPORATION BE LIABLE FOR ANY DIRECT,
+# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+# OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+# EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# Author:
+# Authors:
 #        Yue, jianhui <jianhuix.a.yue@intel.com>
 
 source $(dirname $0)/Common
-RESOURCE_DIR=/home/app/content
-origin_name=$RESOURCE_DIR/tct/opt/tct-pm-wrt-tests/test-widget.wgt
-change_name=$RESOURCE_DIR/tct/opt/tct-pm-wrt-tests/test-widget-testing.wgt
-if [ -f $origin_name ];then
-  mv $origin_name $change_name
+origin_name=test-widget.wgt
+change_name=test-widget-testing.wgt
+if [ -f $path/$origin_name ];then
+  mv $path/$origin_name $path/$change_name
 else
   echo "The widget is not exist"
   exit 1
@@ -33,12 +41,12 @@ fi
 func_install_changename test-widget-testing.wgt
 if [ $? -eq 1 ];then
   echo "The installation is failed"
-  mv $change_name $origin_name
+  mv $path/$change_name $path/$origin_name
   exit 1
 fi
 
 func_uninstall_changename test-widget-testing.wgt
-mv $change_name $origin_name
+mv $path/$change_name $path/$origin_name
 echo "The widget is installed successfully"
 
 exit 0

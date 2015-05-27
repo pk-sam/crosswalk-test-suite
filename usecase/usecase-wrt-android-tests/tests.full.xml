@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="./testcase.xsl"?>
+<test_definition>
+  <suite name="Usecase WRT">
+    <set name="Web Runtime" background="brand-primary" icon="glyphicon-asterisk" type="js" ui-auto="bdd">
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ExtensionManager" platform="all" priority="P0" purpose="ExtensionManager Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="CookieCheck" platform="all" priority="P0" purpose="CookieCheck Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="CopyPasteNative" platform="all" priority="P0" purpose="CopyPasteNative Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ExtensionPermission" platform="all" priority="P0" purpose="ExtensionPermission Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="OpenFile" platform="all" priority="P0" purpose="OpenFile Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="PackertoolIcon" platform="all" priority="P0" purpose="PackertoolIcon Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="PackertoolOptions" platform="all" priority="P0" purpose="PackertoolOptions Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="PackertoolOptions2" platform="all" priority="P0" purpose="PackertoolOptions2 Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="PackertoolXpk" platform="all" priority="P0" purpose="PackertoolXpk Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="auto" id="PermissionApiContacts" platform="all" priority="P0" purpose="PermissionApiContacts Test" status="approved" type="functional_positive">
+        <description>
+          <bdd_test_script_entry test_script_expected_result="0">/opt/usecase-wrt-android-tests/testscripts/PermissionApiContacts.feature</bdd_test_script_entry>
+        </description>
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="RemoteDebugging" platform="all" priority="P0" purpose="RemoteDebugging Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="auto" id="SecurityUrlCertificate" platform="all" priority="P0" purpose="SecurityUrlCertificate Test" status="approved" type="functional_positive">
+        <description>
+          <bdd_test_script_entry test_script_expected_result="0">/opt/usecase-wrt-android-tests/testscripts/SecurityUrlCertificate.feature</bdd_test_script_entry>
+        </description>
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="WebAppGesture" platform="all" priority="P0" purpose="WebAppGesture Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="WebAppHWKey" platform="all" priority="P0" purpose="WebAppHWKey Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="WebAppTaskManager" platform="all" priority="P0" purpose="WebAppTaskManager Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="auto" id="WebAppXwalkHost" platform="all" priority="P0" purpose="WebAppXwalkHost Test" status="approved" type="functional_positive">
+        <description>
+          <bdd_test_script_entry test_script_expected_result="0">/opt/usecase-wrt-android-tests/testscripts/WebappXwalkHost.feature</bdd_test_script_entry>
+        </description>
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ARTMode" platform="all" priority="P0" purpose="ARTMode Test" status="designed" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="PdfDownload" platform="all" priority="P0" purpose="PdfDownload Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="InputDate" platform="all" priority="P0" purpose="InputDate Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ImmersiveFullscreen" platform="all" priority="P0" purpose="ImmersiveFullscreen Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ChromeProtocol" platform="all" priority="P0" purpose="ChromeProtocol Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="VideoPlay" platform="all" priority="P0" purpose="VideoPlay Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="LZMACompressionUI" platform="all" priority="P1" purpose="LZMACompressionUI Test" status="designed" type="functional_positive">
+      </testcase>
+    </set>
+    <set name="Third Party Framework" background="brand-info3" icon="glyphicon-tasks">
+      <testcase component="sample" type="functional_positive" status="approved" execution_type="manual" platform="android" priority="P0" id="PDFjs" purpose="PDFjs">
+      </testcase>
+    </set>
+    <set name="Scheme" background="bs-purple3" icon="glyphicon-fire">
+      <testcase component="sample" type="functional_positive" status="approved" execution_type="manual" platform="android" priority="P0" id="SchemeContent" purpose="SchemeContent">
+      </testcase>
+      <testcase component="sample" type="functional_positive" status="approved" execution_type="manual" platform="android" priority="P0" id="SchemesCheck" purpose="SchemesCheck">
+      </testcase>
+    </set>
+    <set name="Manifest" background="bs-purple-light3" icon="glyphicon-folder-close">
+      <testcase component="sample" type="functional_positive" status="approved" execution_type="manual" platform="android" priority="P0" id="ManifestDemo1" purpose="ManifestDemo1">
+      </testcase>
+      <testcase component="sample" type="functional_positive" status="approved" execution_type="manual" platform="android" priority="P0" id="ManifestDemo2" purpose="ManifestDemo2">
+      </testcase>
+      <testcase component="sample" type="functional_positive" status="approved" execution_type="manual" platform="android" priority="P0" id="ManifestDemo3" purpose="ManifestDemo3">
+      </testcase>
+      <testcase component="sample" type="functional_positive" status="approved" execution_type="manual" platform="android" priority="P0" id="ManifestDemo4" purpose="ManifestDemo4">
+      </testcase>
+      <testcase component="sample" type="functional_positive" status="approved" execution_type="manual" platform="android" priority="P0" id="ManifestDemo5" purpose="ManifestDemo5">
+      </testcase>
+    </set>
+    <set name="SharedMode" background="brand-danger" icon="glyphicon-th-large">
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="LocalDownload" platform="all" priority="P0" purpose="LocalDownload Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ConfigUrl" platform="all" priority="P0" purpose="ConfigUrl Test" status="approved" type="functional_positive" subcase="3">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MisarchSharedIA" platform="all" priority="P0" purpose="MisarchSharedIA Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MisarchSharedArm" platform="all" priority="P0" purpose="MisarchSharedArm Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MisarchEmbeddedArm" platform="all" priority="P0" purpose="MisarchEmbeddedArm Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MisarchEmbeddedIA" platform="all" priority="P0" purpose="MisarchEmbeddedIA Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="WebAppsCoexist" platform="all" priority="P0" purpose="WebAppsCoexist Test" status="approved" type="functional_positive" subcase="2">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="DownloadUsage" platform="all" priority="P0" purpose="DownloadUsage Test" status="approved" type="functional_positive" subcase="4">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="DownloadDisturb" platform="all" priority="P0" purpose="DownloadDisturb Test" status="approved" type="functional_positive" subcase="3">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="UninstallLib" platform="all" priority="P0" purpose="UninstallLib Test" status="approved" type="functional_positive">
+      </testcase>
+    </set>
+    <set name="SharedModeGooglePlayer" background="bs-purple" icon="glyphicon-heart">
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="GooglePlayer" platform="all" priority="P0" purpose="GooglePlayer Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MisarchSharedIA" platform="all" priority="P0" purpose="MisarchSharedIA Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MisarchSharedArm" platform="all" priority="P0" purpose="MisarchSharedArm Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MisarchEmbeddedArm" platform="all" priority="P0" purpose="MisarchEmbeddedArm Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MisarchEmbeddedIA" platform="all" priority="P0" purpose="MisarchEmbeddedIA Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="WebAppsCoexist" platform="all" priority="P0" purpose="WebAppsCoexist Test" status="approved" type="functional_positive" subcase="2">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="DownloadUsage" platform="all" priority="P0" purpose="DownloadUsage Test" status="approved" type="functional_positive" subcase="4">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="DownloadDisturb" platform="all" priority="P0" purpose="DownloadDisturb Test" status="approved" type="functional_positive" subcase="3">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="DownloadSearchList" platform="all" priority="P0" purpose="DownloadSearchList Test" status="approved" type="functional_positive">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="UninstallLib" platform="all" priority="P0" purpose="UninstallLib Test" status="approved" type="functional_positive">
+      </testcase>
+    </set>
+  </suite>
+</test_definition>

@@ -1,7 +1,6 @@
+# Coding Style Guide Cheat-Sheet
+
 <table>
-  <tr>
-    <th colspan="8">Coding Style Guide Cheat-Sheet</th>
-  </tr>
   <tr>
     <td>LANG</td>
     <td>CSS</td>
@@ -44,7 +43,7 @@
       &lt filename.h&gt
     </td>
     <td>
-      package  xxx.xxx 
+      package  xxx.xxx
       import java.lang.Filename
     </td>
   </tr>
@@ -60,7 +59,7 @@
     <td>
       ”””Comment”””
       #TODO(Name):Comment
-      #TODO(Email):Comment  
+      #TODO(Email):Comment
     </td>
     <td>
       # Comment
@@ -188,7 +187,7 @@
     <td>1 blank line to separate large logical chunks of code.</td>
     <td>1 blank line between logically related pieces of code in group.</td>
     <td>
-      2 blank lines between top-level definitions. 
+      2 blank lines between top-level definitions.
       1 blank line between method definitions.
     </td>
     <td>1 blank line between code block.</td>
@@ -200,9 +199,10 @@
   </tr>
 </table>
 
-#Other reminder:
+## Notes
 
 - CSS:
+
   - ID and Class Naming
 
         Use meaningful or generic ID and class names. Use ID and class names that are as short as possible but as long as necessary.
@@ -210,7 +210,7 @@
         Do not concatenate words and abbreviations in selectors by any characters (including none at all) other than hyphens.
 
   - Declaration Order
- 
+
         In alphabetical order.
 
         Ignore vendor-specific prefixes. Keep sorted multiple vendor-specific prefixes for a certain CSS property.
@@ -221,15 +221,15 @@
 
   - CSS Quotation Marks
 
-        Use single ('') rather than double ("") quotation marks for attribute selectors or property values. Do not use quotation marks in 
+        Use single ('') rather than double ("") quotation marks for attribute selectors or property values. Do not use quotation marks in
 
-  - URI values (url()).
+  - URI values (`url()`).
 
-        Exception: If you do need to use the @charset rule, use double quotation marks—single quotation marks are not permitted.
+        Exception: If you do need to use the `@charset` rule, use double quotation marks; single quotation marks are not permitted.
 
         Embedded in the HTML
 
-        <link rel="stylesheet" href="mystyle.css"\>
+        `<link rel="stylesheet" href="mystyle.css"\>`
 
         More info: [http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml)
 
@@ -237,7 +237,7 @@
 
   - var
 
-        Always declare variable with var.
+        Always declare variable with `var`.
 
   - Nested functions
 
@@ -245,7 +245,7 @@
 
   - delete
 
-        Prefer “this.foo = null”, to “delete this.foo”.
+        Prefer `this.foo = null`, to `delete this.foo`.
 
   - this
 
@@ -257,11 +257,11 @@
 
   - Strings
 
-        For consistency single-quotes (') are preferred to double-quotes ("). This is helpful when creating strings that include HTML.
+        For consistency single-quotes ('') are preferred to double-quotes (""). This is helpful when creating strings that include HTML.
 
   - Embedded in the HTML
 
-        <script src="myscripts.js"\></script\>.
+        `<script src="myscripts.js"\></script\>`
 
          More info: [http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
 
@@ -295,6 +295,13 @@
 
         Use the format method or the % operator for formatting strings, even when the parameters are all strings.
 
+  - Practice with autopep8 and pylint
+
+        ```
+        autopep8 --in-place --aggressive <script.py>
+        pylint <script.py>
+        ```
+
         More info: [http://google-styleguide.googlecode.com/svn/trunk/pyguide.html](http://google-styleguide.googlecode.com/svn/trunk/pyguide.html)
 
 - Shell:
@@ -305,22 +312,22 @@
 
   - Pipelines
 
-        Pipelines should be split one per line if they don't all fit on one line.
+        Pipelines should be split one per line if they do not all fit on one line.
 
   - Loops
 
-        Put “; do” and “; then” on the same line as the while, for or if.
+        Put `; do` and `; then` on the same line as the `while`, `for` or `if`.
 
   - Variable expansion
 
-        Stay consistent with what you find; quote your variables; prefer "${var}" over "$var".
+        Stay consistent with what you find; quote your variables; prefer `${var}` over `$var`.
 
   - Command Substitution
 
-        Use $(command) instead of backticks.
+        Use `$(command)` instead of backticks.
 
-  - Test, [ and [[
-        [[ ... ]] is preferred over [, test and /usr/bin/[.
+  - Test, `[` and `[[`
+        `[[ ... ]]` is preferred over `[`, test and `/usr/bin/[`.
 
   - Checking Return Values
 
@@ -331,8 +338,8 @@
         A function called main is required for scripts long enough to contain at least one other function.
 
   - Eval
- 
-        eval should be avoided.  
+
+        `eval` should be avoided.
 
         More info: [http://google-styleguide.googlecode.com/svn/trunk/shell.xml](http://google-styleguide.googlecode.com/svn/trunk/shell.xml)
 
@@ -364,7 +371,7 @@
 
   - Sizeof
 
-        Prefer sizeof(varname) to sizeof(type).
+        Prefer `sizeof(varname)` to `sizeof(type)`.
 
   - Lambda expressions
 
@@ -372,7 +379,7 @@
 
   - Preincrement and Predecrement
 
-        Use prefix form (++i) of the increment and decrement operators with iterators and other template objects.
+        Use prefix form (`++i`) of the increment and decrement operators with iterators and other template objects.
 
   - Exceptions
 
@@ -384,18 +391,19 @@
 
   - Loops and Switch Statements
 
-        Switch statements may use braces for blocks. Annotate non-trivial fall-through between cases. Empty loop bodies should use {} or continue.
+        Switch statements may use braces for blocks. Annotate non-trivial fall-through between cases. Empty loop bodies should use `{}` or continue.
 
         More info: [http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
 
 - Java:
+
   - One variable per declaration
 
-        Every variable declaration (field or local) declares only one variable: declarations such as int a, b; are not used.
+        Every variable declaration (field or local) declares only one variable: declarations such as `int a, b;` are not used.
 
   - No C-style array declarations
 
-        The square brackets form a part of the type, not the variable: String[] args, not String args[].
+        The square brackets form a part of the type, not the variable: `String[] args`, not `String args[]`.
 
   - Package statement
 
@@ -403,17 +411,45 @@
 
   - Caught exceptions
 
-        Not ignored 
+        Not ignored
   - Exactly one top-level class declaration
 
         Each top-level class resides in a source file of its own.
 
-  - Static members: 
-           
+  - Static members:
+
         When a reference to a static class member must be qualified, it is qualified with that class's name, not with a reference or expression of that class's type.
 
-  - Switch statements 
- 
-        Terminology Note: Inside the braces of a switch block are one or more statement groups. Each statement group consists of one or more switch labels (either case FOO: or default :), followed by one or more statements.
+  - Switch statements
+
+        Terminology Note: Inside the braces of a switch block are one or more statement groups. Each statement group consists of one or more switch labels (either `case FOO:` or `default :`), followed by one or more statements.
 
         More info: [http://google-styleguide.googlecode.com/svn/trunk/javaguide.html](http://google-styleguide.googlecode.com/svn/trunk/javaguide.html)
+
+
+- XML:
+
+  - Use `xmllint --format` with default indent 2 spaces.
+        See [http://xmlsoft.org/xmllint.html](http://xmlsoft.org/xmllint.html)
+
+## More Rules of test development
+
+- Comment each code block in a uniform way.
+
+- Return a clear pass/fail result.
+
+- Clean environment before exiting tests.
+
+- Automate test under condition of stability.
+
+- Keep test cases independent from each other.
+
+- Keep case independent from UX or vertical specific applications.
+
+- Avoid complicated code logic (comment it if unavoidable).
+
+- Avoid duplicated code.
+
+- Remove redundant code.
+
+

@@ -27,6 +27,7 @@
 #         Fan, Yugang <yugang.fan@intel.com>
 
 import os
+import re
 import subprocess
 import string
 
@@ -52,13 +53,15 @@ def do_cmd(cmd):
 
     return (cmd_return_code, output)
 
-def get_user_id(mode,device):
+def get_user_id(mode,device,tizen_user=None):
     cmd = ''
     try:
+       if not tizen_user:
+          tizen_user = 'app'
        if mode == "SDB" :
-          cmd = "sdb -s %s shell id -u app" % device
+          cmd = "sdb -s %s shell id -u %s" % (device, tizen_user)
        else:
-          cmd = "ssh %s \"id -u app\"" % device
+          cmd = "ssh %s \"id -u %s\"" % (device, tizen_user)
        user_info =  do_cmd(cmd)
        user_id = user_info[1][0]
     except Exception as e:
@@ -67,11 +70,11 @@ def get_user_id(mode,device):
     return  user_id
     
 def update_cmd(xw_env,cmd=None):
-    if "xwalkctl" in cmd:
+    if "app_launcher -l" in cmd:
         cmd = "su - app -c '%s;%s'" % (xw_env, cmd)
     return cmd
 
-def get_appid_by_name(app_name=None, platform=None):
+def get_appid_by_name(app_name=None, platform=None, tizen_user=None):
     mode = "SDB"
     if "comm-mode" in platform and platform["comm-mode"] != "" and platform[
             "comm-mode"].upper().find('SSH') >= 0:
@@ -87,15 +90,19 @@ def get_appid_by_name(app_name=None, platform=None):
     else:
         device = platform["device"]
 
-    user_id = get_user_id(mode,device)
+    user_id = get_user_id(mode,device,tizen_user)
+    user_is_valid = re.match(r'^[0-9]*$',user_id)
+    if not user_is_valid:
+       print "User %s does not exist, exit" % tizen_user
+
     xw_env = "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/" + str(user_id) + "/dbus/user_bus_socket"
 
     if mode == "SSH":
         cmd = "ssh %s \"%s\"" % (
-            device, update_cmd(xw_env,'xwalkctl'))
+            device, update_cmd(xw_env,'app_launcher -l'))
     else:
         cmd = "sdb -s %s shell %s" % (
-            device, update_cmd(xw_env,'xwalkctl'))
+            device, update_cmd(xw_env,'app_launcher -l'))
 
     (return_code, output) = do_cmd(cmd)
     if return_code != 0:
@@ -104,11 +111,12 @@ def get_appid_by_name(app_name=None, platform=None):
     test_app_id = ""
     for line in output:
         line_sections = line.strip("\r\n").split()
+        print line_sections
         if len(line_sections) == 1:
             continue
-        i_name = line_sections[1]
+        i_name = line_sections[0].strip("\'")
         if app_name == i_name:
-            test_app_id = line_sections[0]
+            test_app_id = line_sections[1].strip("\'")
             break
     print "Got app-id of %s: %s" % (app_name, test_app_id)
     return test_app_id

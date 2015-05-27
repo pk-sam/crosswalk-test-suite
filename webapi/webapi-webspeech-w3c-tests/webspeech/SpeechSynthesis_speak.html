@@ -36,7 +36,7 @@ Authors:
 //==== LABEL Check if speak method of SpeechSynthesis returns value
 //==== PRIORITY P1
 //==== SPEC Tizen Web API:Speech:SpeechSynthesis:resume M
-//==== SPEC_URL https://dvcs.w3.org/hg/webspeech-api/raw-file/tip/webspeechapi.html
+//==== SPEC_URL https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html
 //==== TEST_CRITERIA MR
 
 //test(function () {
@@ -45,7 +45,7 @@ Authors:
         webspeechMessage.text = "Hello World";
         webspeechMessage.lang = 'en-US';
         webspeechMessage.rate = 1.2;
-        returnValue = window.webspeechSynthesis.speak(webspeechMessage);
+        returnValue = speechSyn.speak(webspeechMessage);
         assert_equals(returnValue, undefined, "returnValue should be undefined");
     }
 //}, document.title);

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="./testcase.xsl"?>
+<test_definition>
+  <suite category="Stability" name="stability-iterative-android-tests">
+    <set name="iterative" type="pyunit">
+      <testcase component="Stability/Iterative" execution_type="auto" id="Crosswalk_Stabiterative_Install_Uninstall" purpose="Validate the app can be install/uninstall 2 hours">
+        <description>
+          <test_script_entry>/opt/stability-iterative-android-tests/iterative/Install_Uninstall_Repeatedly.py</test_script_entry>
+        </description>
+      </testcase>
+      <testcase component="Stability/Iterative" execution_type="auto" id="Crosswalk_Stabiterative_Launch_Exit" purpose="Validate the app can be launch/exit 4 hours">
+        <description>
+          <test_script_entry>/opt/stability-iterative-android-tests/iterative/Launch_Exit_Repeatedly.py</test_script_entry>
+        </description>
+      </testcase>
+    </set>
+  </suite>
+</test_definition>

@@ -1,0 +1,5 @@
+{
+  "name": "deepin-webapps-microsoft-skydrive",
+  "xwalk_version": "0.0.1",
+  "start_url": "https://skydrive.live.com"
+}

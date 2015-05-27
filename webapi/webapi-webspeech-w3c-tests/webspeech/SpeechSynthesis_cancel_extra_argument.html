@@ -32,16 +32,16 @@ Authors:
 //==== LABEL Check if cancel method of SpeechSynthesis works properly with extra argument
 //==== PRIORITY P2
 //==== SPEC Tizen Web API:Speech:SpeechSynthesis:cancel M
-//==== SPEC_URL https://dvcs.w3.org/hg/webspeech-api/raw-file/tip/webspeechapi.html
+//==== SPEC_URL https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html
 //==== TEST_CRITERIA MNAEX
 
 test(function () {
     var webspeechMessage, webspeechMessage1;
     webspeechMessage = new SpeechSynthesisUtterance("this is test");
-    window.webspeechSynthesis.speak(webspeechMessage);
+    speechSyn.speak(webspeechMessage);
     webspeechMessage1 = new SpeechSynthesisUtterance("this is test 1");
-    window.webspeechSynthesis.speak(webspeechMessage1);
-    checkExtraArgument(window.webspeechSynthesis, "cancel");
+    speechSyn.speak(webspeechMessage1);
+    checkExtraArgument(speechSyn, "cancel");
 }, document.title);
 
 </script>

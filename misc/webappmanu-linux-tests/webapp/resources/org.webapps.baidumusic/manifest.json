@@ -1,0 +1,5 @@
+{
+  "name": "deepin-webapps-baidu-music",
+  "xwalk_version": "0.0.1",
+  "start_url": "http://fm.baidu.com"
+}

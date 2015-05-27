@@ -1,36 +1,22 @@
 # Behavior Test Tool User Guide
 
-Version 1.0
-
-Copyright © 2014 Intel Corporation. All rights reserved. No portions of this document may be reproduced without the written permission of Intel Corporation.
-
-Intel is a trademark of Intel Corporation in the U.S. and/or other countries.
-
-Linux is a registered trademark of Linus Torvalds.
-
-Tizen® is a registered trademark of The Linux Foundation.
-
-ARM is a registered trademark of ARM Holdings Plc.
-
-\*Other names and brands may be claimed as the property of others.
-
-Any software source code reprinted in this document is furnished under a software license and may only be used or copied in accordance with the terms of that license.
-
-#1. Introduction
+## 1. Introduction
 
 This document provides comprehensive information about Behavior Test Tool, including the following: Overview, Installation and Deployment, Test Execution and Report.
 
-#2. Overview
+Note that the `tester` in this guide is the user name of the device under test. It just means a normal username for multiuser support.
+
+## 2. Overview
 
 Behavior Test Tool is a device behavior checker that uses jQuery. It is a major component of the Tizen Compliance Tests tool set.
 
 Behavior Test Tool has these features:
 
-- A list of behaviors you can test, with information about test cases 
+- A list of behaviors you can test, with information about test cases
 - Test cases for checking and evaluating the behavior of a device
 - Automatically generated test reports you can view and save for further analysis
 
-#3. Install Crosswalk
+## 3. Install Crosswalk
 
 - Install crosswalk on Tizen
 
@@ -42,13 +28,13 @@ Behavior Test Tool has these features:
 
   - Deploy crosswalk to Tizen device
 
-        $ sdb push crosswalk-<version\>.i686.rpm /opt/home/developer
+        $ sdb push crosswalk-<version\>.i686.rpm /opt/home/tester
 
-        $ sdb push tizen-extensions-crosswalk-<version\>.i686.rpm /opt/home/developer
+        $ sdb push tizen-extensions-crosswalk-<version\>.i686.rpm /opt/home/tester
 
-        $ sdb shell "rpm -ivh /opt/home/developer/crosswalk-<version\>.i686.rpm"
+        $ sdb shell "rpm -ivh /opt/home/tester/crosswalk-<version\>.i686.rpm"
 
-        $ sdb shell "rpm -ivh /opt/home/developer/tizen-extensions-crosswalk-<version\>.i686.rpm"
+        $ sdb shell "rpm -ivh /opt/home/tester/tizen-extensions-crosswalk-<version\>.i686.rpm"
 
 - Install crosswalk on Android
 
@@ -62,7 +48,7 @@ Behavior Test Tool has these features:
 
         $ adb install /path/to/crosswalk-apks-<version\>-x86/XWalkRuntimeLib.apk
 
-#4. Deploy tinyweb
+## 4. Deploy tinyweb
 
 1. Deploy tinyweb on Tizen
 
@@ -78,31 +64,31 @@ Behavior Test Tool has these features:
 
         $ sdb shell "mkdir -p /opt/usr/media/tct/"
 
-        $ sdb push tinyweb /opt/home/developer/
+        $ sdb push tinyweb /opt/home/tester/
 
-        $ sdb shell "chmod a+x /opt/home/developer/tinyweb"
+        $ sdb shell "chmod a+x /opt/home/tester/tinyweb"
 
-        $ sdb push cgi-getcookie /opt/home/developer/
+        $ sdb push cgi-getcookie /opt/home/tester/
 
-        $ sdb shell "chmod a+x /opt/home/developer/cgi-getcookie"
+        $ sdb shell "chmod a+x /opt/home/tester/cgi-getcookie"
 
-        $ sdb push cgi-getfield /opt/home/developer/
+        $ sdb push cgi-getfield /opt/home/tester/
 
-        $ sdb shell "chmod a+x /opt/home/developer/cgi-getfield"
+        $ sdb shell "chmod a+x /opt/home/tester/cgi-getfield"
 
-        $ sdb push server.pem /opt/home/developer/
+        $ sdb push server.pem /opt/home/tester/
 
-        $ sdb shell "chmod 666 /opt/home/developer/server.pem"
+        $ sdb shell "chmod 666 /opt/home/tester/server.pem"
 
-        $ sdb shell "ln -s /usr/lib/libssl.so.1.0.0 /opt/home/developer/libssl.so"
+        $ sdb shell "ln -s /usr/lib/libssl.so.1.0.0 /opt/home/tester/libssl.so"
 
-        $ sdb shell "ln -s /usr/lib/libcrypto.so.1.0.0 /opt/home/developer/libcrypto.so"
+        $ sdb shell "ln -s /usr/lib/libcrypto.so.1.0.0 /opt/home/tester/libcrypto.so"
 
   - Launch tinyweb
 
         $ DPATH=`sdb shell "printenv PATH"`
 
-        $ timeout 5 sdb shell "env LD\_LIBRARY\_PATH=/opt/home/developerPATH=$DPATH:/opt/home/developer tinyweb -ssl\_certificate /opt/home/developer/server.pem -document\_root /opt/usr/media/tct/ -listening\_ports 80,8080,8081,8082,8083,8443s; sleep 3s"
+        $ timeout 5 sdb shell "env LD\_LIBRARY\_PATH=/opt/home/tester PATH=$DPATH:/opt/home/tester tinyweb -ssl\_certificate /opt/home/tester/server.pem -document\_root /opt/usr/media/tct/ -listening\_ports 80,8080,8081,8082,8083,8443s; sleep 3s"
 
 2. Deploy tinyweb on Android
 
@@ -112,7 +98,7 @@ Behavior Test Tool has these features:
 
         $ cd tinyweb/android/native/jni/ && /path/to/android-ndk-<version\>/ndk-build
 
-  - Copy tinyweb/android/native/libs/ to folder tinyweb/android/assets/system/libs/ 
+  - Copy tinyweb/android/native/libs/ to folder tinyweb/android/assets/system/libs/
 
         For example:
 
@@ -125,7 +111,7 @@ Behavior Test Tool has these features:
 
   - Launch tinyweb by clicking the tinyweb app icon in launcher
 
-#5 Installation Behavior Test Tool
+## 5 Installation Behavior Test Tool
 
 - Pack Behavior Test Tool
 
@@ -153,7 +139,7 @@ Behavior Test Tool has these features:
 
     $ ./opt/tct-behavior-tests/inst.sh
 
-#6. Preparing To Test
+## 6. Preparing To Test
 
 The home page in which allBehavior Test Tool test cases are listed is shown below:
 
@@ -174,7 +160,7 @@ Note: Currently export result is blocked by crosswalk implement.
 - **Reset**: Reset the test results.
 - **Exit**: Quit.
 
-#7. Executing Tests
+## 7. Executing Tests
 
 - Click the Info button to view the test case description, and perform the test according to it.
 
@@ -184,6 +170,7 @@ Figure 6‑1. Behavior Test ToolTest Case Info Page
 
 - Compare the test result with the expected result, then click **Pass** or **Fail** to update the test result on the Home page.
 
-#8. Viewing theReport
+## 8. Viewing theReport
 
 To generate the result XML at the specific location, click Export. You can view the summary information, including the case title and result.
+

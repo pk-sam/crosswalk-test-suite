@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="./testcase.xsl"?>
+<test_definition>
+  <suite name="usecase-wrt-linux-tests">
+    <set background="brand-primary" icon="glyphicon-asterisk" name="Package Management">
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ApplicationLocalStorage" purpose="ApplicationLocalStorage" subcase="4">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ApplicationIndexDB" purpose="ApplicationIndexDB" subcase="4">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ApplicationCookies" purpose="ApplicationCookies" subcase="4">
+      </testcase>
+    </set>
+    <set background="brand-primary" icon="glyphicon-asterisk" name="Runtime">
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="ExternalURL" purpose="ExternalURL">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="Flash" purpose="Flash">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="CSP" purpose="CSP">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="DisplayMode" purpose="DisplayMode" subcase="4">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="WindowSize" purpose="WindowSize" subcase="3">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="StartURL" purpose="StartURL" subcase="2">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="MediaCodec" purpose="MediaCodec" subcase="2">
+      </testcase>
+      <testcase component="Crosswalk Use Cases/WRT" execution_type="manual" id="WebNotification" purpose="WebNotification">
+      </testcase>
+    </set>
+  </suite>
+</test_definition>

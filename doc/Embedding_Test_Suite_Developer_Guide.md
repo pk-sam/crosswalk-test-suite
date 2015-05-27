@@ -1,22 +1,5 @@
 # EmbeddingAPI Test Suite Developer Guide
 
-Version 1.0, for Android 4.X
-
-Copyright © 2014 Intel Corporation. All rights reserved. No portions of this document may be reproduced without the written permission of Intel Corporation.
-
-Intel is a trademark of Intel Corporation in the U.S. and/or other countries.
-
-Linux is a registered trademark of Linus Torvalds.
-
-Tizen® is a registered trademark of The Linux Foundation.
-
-ARM is a registered trademark of ARM Holdings Plc.
-
-\*Other names and brands may be claimed as the property of others.
-
-Any software source code reprinted in this document is furnished under a software license and may only be used or copied in accordance with the terms of that license.
-
-
 ## Introduction
 
 This document provides development information about EmbeddingAPI Test Suite, including the following: Overview, Build a development environment, Source Code Structure Introduction, Naming Convention, and How to Add New Test etc.
@@ -46,7 +29,7 @@ Refer the following link for the way to create an application with the embedding
 
   - Open ADT.
   - Select File > New>Project..., then Android>Android Project From Existing Code.
-  - Set Root Directory to the path of the webapi-embeddingapi-xwalk-tests/directory you extracted.
+  - Set Root Directory to the path of the embedding-api-android-tests/directory you extracted.
   - Click Finish. The imported project will now be visible in the Package Explorer.
 
 
@@ -77,14 +60,14 @@ Figure 1. The source code structure
 Key files, folders are:
 
 - src fold: All java code is in this fold.
-- MainActivity.java: All the embedding test cases share this activity. 
-- xwalk.embedding.base fold: Some base classes are defined in this fold. 
+- MainActivity.java: All the embedding test cases share this activity.
+- xwalk.embedding.base fold: Some base classes are defined in this fold.
 - XwalkViewTestBase.java: All the embeddingAPI test cases extend this class. Common methods that test cases class will call are definded in this class. For example: loadAssetFileAndWaitForTitle(String fileName)
-- xwalk.embedding.test fold: All the test cases class files are in this fold. 
+- xwalk.embedding.test fold: All the test cases class files are in this fold.
 - assets fold: html, json and javascript, image, css files can be stored in this fold.
 - *.html: html files that can be called by java code. For example: loadUrlSync("file:///android\_asset/index.html",null).
 - manifest.json: json file that can be called by java code.
-- libs folder: All the referenced jars are stored in this fold. 
+- libs folder: All the referenced jars are stored in this fold.
 - AndroidManifest.xml: Android framework config file.
 - pack.sh: a shell script file to support a test suite package in the type of APK, in .zip, for Android platform.
 - test.xml: a mandatory file to describe all test cases for this test suite.
@@ -152,7 +135,7 @@ Tests.xml Example.
     <?xml version="1.0" encoding="UTF-8"?>
     <?xml-stylesheet type="text/xsl" href="./testcase.xsl"?>
     <test_definition>
-      <suite name="webapi-embeddingapi-xwalk-tests" category="Android embedding APIs">
+      <suite name="embedding-api-android-tests" category="Android embedding APIs">
         <set name="EmbeddingApiTest" type="androidunit">
           <testcase component="Embedding API Test" execution_type="auto" id="LoadTest" purpose="Check if the load related methods are effective." subcases="12">
             <description>
@@ -207,3 +190,4 @@ Tests.xml Example.
         </set>
       </suite>
     </test_definition>
+

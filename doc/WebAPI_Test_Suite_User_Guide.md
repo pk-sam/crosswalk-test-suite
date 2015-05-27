@@ -1,22 +1,6 @@
 # WebAPI Test Suite User Guide
 
-Version 1.0
-
-Copyright © 2014 Intel Corporation. All rights reserved. No portions of this document may be reproduced without the written permission of Intel Corporation.
-
-Intel is a trademark of Intel Corporation in the U.S. and/or other countries.
-
-Linux is a registered trademark of Linus Torvalds.
-
-Tizen® is a registered trademark of The Linux Foundation.
-
-ARM is a registered trademark of ARM Holdings Plc.
-
-\*Other names and brands may be claimed as the property of others.
-
-Any software source code reprinted in this document is furnished under a software license and may only be used or copied in accordance with the terms of that license.
-
-#1. Introduction
+## 1. Introduction
 
 This document provides method to run WebAPI TestSuite on TIZEN and Android Crosswalk. You can use the following method to run itwith testkit-lite. Testkit tool-chain includes 3 components:
 
@@ -24,7 +8,9 @@ This document provides method to run WebAPI TestSuite on TIZEN and Android Cross
 - testkit-stub: a test stub application deployed on Device
 - tinyweb:  a web service application deployed on Device
 
-#2. Web Testing Architecture
+Note that the `tester` in this guide is the user name of the device under test. It just means a normal username for multiuser support.
+
+## 2. Web Testing Architecture
 
 - Web Testing on Tizen
 
@@ -46,7 +32,7 @@ There are two types of Webapi tests:
 
     Self contained test package which include all things - web runner, TCs.
 
-#3. Install testkit-lite on Host
+## 3. Install testkit-lite on Host
 
 - Deploy testkit-lite
 
@@ -56,7 +42,7 @@ There are two types of Webapi tests:
 
         $ sudo pip install requests
 
-       
+
 
   - Install testkit-lite from source code in GitHub
 
@@ -64,7 +50,7 @@ There are two types of Webapi tests:
 
         $ cd testkit-lite && sudo python setup.py install
 
-#4. Web Test on Tizen Crosswalk
+## 4. Web Test on Tizen Crosswalk
 
 - Download sdb tool and deploy it to Host
 
@@ -104,13 +90,13 @@ There are two types of Webapi tests:
 
   - Deploy crosswalk to Tizen device
 
-        $ sdb push crosswalk-<version\>.i686.rpm /opt/home/developer
+        $ sdb push crosswalk-<version\>.i686.rpm /opt/home/tester
 
-        $ sdb push tizen-extensions-crosswalk-<version\>.i686.rpm /opt/home/developer
+        $ sdb push tizen-extensions-crosswalk-<version\>.i686.rpm /opt/home/tester
 
-        $ sdb shell "rpm -ivh /opt/home/developer/crosswalk-<version\>.i686.rpm"
+        $ sdb shell "rpm -ivh /opt/home/tester/crosswalk-<version\>.i686.rpm"
 
-        $ sdb shell "rpm -ivh /opt/home/developer/tizen-extensions-crosswalk-<version\>.i686.rpm"
+        $ sdb shell "rpm -ivh /opt/home/tester/tizen-extensions-crosswalk-<version\>.i686.rpm"
 
 - Deploy testkit-stub and launch it
 
@@ -124,15 +110,15 @@ There are two types of Webapi tests:
 
   - Deploy binary to Tizen device
 
-        $ sdb push testkit-stub /opt/home/developer
+        $ sdb push testkit-stub /opt/home/tester
 
-        $ sdb shell "chmod +x /opt/home/developer/testkit-stub"
+        $ sdb shell "chmod +x /opt/home/tester/testkit-stub"
 
   - Launch testkit-stub
 
-        $ sdb shell "/opt/home/developer/testkit-stub --port:8000"
+        $ sdb shell "/opt/home/tester/testkit-stub --port:8000"
 
-       
+
 
 - Deploy tinyweb and launch it
 
@@ -146,31 +132,31 @@ There are two types of Webapi tests:
 
   - Deploy binaries to Tizen device
 
-        $ sdb push tinyweb /opt/home/developer/
+        $ sdb push tinyweb /opt/home/tester/
 
-        $ sdb shell "chmod a+x /opt/home/developer/tinyweb"
+        $ sdb shell "chmod a+x /opt/home/tester/tinyweb"
 
-        $ sdb push cgi-getcookie /opt/home/developer/
+        $ sdb push cgi-getcookie /opt/home/tester/
 
-        $ sdb shell "chmod a+x /opt/home/developer/cgi-getcookie" 
+        $ sdb shell "chmod a+x /opt/home/tester/cgi-getcookie"
 
-        $ sdb push cgi-getfield /opt/home/developer/
+        $ sdb push cgi-getfield /opt/home/tester/
 
-        $ sdb shell "chmod a+x /opt/home/developer/cgi-getfield"
+        $ sdb shell "chmod a+x /opt/home/tester/cgi-getfield"
 
-        $ sdb push server.pem /opt/home/developer/
+        $ sdb push server.pem /opt/home/tester/
 
-        $ sdb shell "chmod 666 /opt/home/developer/server.pem"
+        $ sdb shell "chmod 666 /opt/home/tester/server.pem"
 
-        $ sdb shell "ln -s /usr/lib/libssl.so.1.0.0 /opt/home/developer/libssl.so"
+        $ sdb shell "ln -s /usr/lib/libssl.so.1.0.0 /opt/home/tester/libssl.so"
 
-        $ sdb shell "ln -s /usr/lib/libcrypto.so.1.0.0 /opt/home/developer/libcrypto.so"
+        $ sdb shell "ln -s /usr/lib/libcrypto.so.1.0.0 /opt/home/tester/libcrypto.so"
 
   - Launch tinyweb
 
         $ DPATH=\`sdb shell "printenv PATH"\`
 
-        $ timeout 5 sdb shell "env LD\_LIBRARY\_PATH=/opt/home/developer PATH=$DPATH:/opt/home/developer tinyweb -ssl\_certificate /opt/home/developer/server.pem -document\_root /opt/usr/media/tct/ -listening\_ports 80,8080,8081,8082,8083,8443s; sleep 3s"
+        $ timeout 5 sdb shell "env LD\_LIBRARY\_PATH=/opt/home/tester PATH=$DPATH:/opt/home/tester tinyweb -ssl\_certificate /opt/home/tester/server.pem -document\_root /opt/usr/media/tct/ -listening\_ports 80,8080,8081,8082,8083,8443s; sleep 3s"
 
 - Pack test suite package
 
@@ -193,7 +179,7 @@ There are two types of Webapi tests:
     $ sdb shell /opt/usr/media/tct/opt/<test_suite_name\>/inst.sh -u
 
 
-#5. Web Test on Android Crosswalk
+## 5. Web Test on Android Crosswalk
 
 - Deploy Android ADT bundle (Android SDK, IDE included) and Android NDK
 
@@ -278,3 +264,4 @@ There are two types of Webapi tests:
 - Uninstall test suite
 
     $ /path/to/opt/<test_suite_name\>/inst.sh -u
+

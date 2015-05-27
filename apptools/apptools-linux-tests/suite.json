@@ -1,0 +1,38 @@
+{
+    "pkg-blacklist": [
+        "config.xml",
+        "pack.py",
+        "testcase.xsl",
+        "testresult.xsl",
+        "tests.css",
+        "icon.png",
+        "manifest.json",
+        "suite.json",
+        "inst.*"
+    ],
+    "pkg-list": {
+        "deb": {
+            "blacklist": [
+                "*"
+            ],
+            "copylist": {
+                "inst.deb.py": "inst.py",
+                "apptools": "apptools",
+                "tools": "tools",
+                "tests.full.xml": "tests.full.xml",
+                "tests.xml": "tests.xml"
+            },
+            "subapp-list": {
+                ".": {
+                    "app-name": "org.apptools.apptoolslinuxtests",
+                    "install-path": ".",
+                    "copylist": {
+                    "PACK-TOOL-ROOT/resources/testharness": "resources",
+                    "PACK-TOOL-ROOT/resources/webrunner": "."
+                    }
+                }
+            }
+        }
+    },
+    "pkg-name": "apptools-linux-tests"
+}

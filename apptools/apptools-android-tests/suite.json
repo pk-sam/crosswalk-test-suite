@@ -1,0 +1,28 @@
+{
+    "pkg-blacklist": [
+        "pack.py",
+        "testcase.xsl",
+        "testresult.xsl",
+        "tests.css",
+        "icon.png",
+        "manifest.json",
+        "suite.json",
+        "inst.*"
+    ],
+    "pkg-list": {
+        "apk": {
+            "blacklist": [],
+            "copylist": {
+                "tools":"tools",
+                "report":"report",
+                "tests.full.xml": "tests.full.xml",
+                "arch.txt": "arch.txt",
+                "version.txt": "version.txt",
+                "tests.xml": "tests.xml",
+                "inst.apk.py":"inst.py"
+            },
+            "pkg-app": {}
+        }
+    },
+    "pkg-name": "apptools-android-tests"
+}

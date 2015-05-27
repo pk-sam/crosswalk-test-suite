@@ -33,13 +33,131 @@ Authors:
 
 var sstorage = window.sessionStorage;
 var applist;
+var subapplist;
+var ifcloased = 0;
 
-function exportResult() {
-    //TODO: export the test result from the saved result in session storage.
+function getCurrentTime() {
+  var myDate = new Date();
+  var year = myDate.getFullYear();
+  var month = myDate.getMonth() + 1 < 10 ? "0" + (myDate.getMonth() + 1) : myDate.getMonth() + 1;
+  var date = myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate.getDate();
+  var hours = myDate.getHours() < 10 ? "0" + myDate.getHours() : myDate.getHours();
+  var minutes = myDate.getMinutes() < 10 ? "0" + myDate.getMinutes() : myDate.getMinutes();
+  var seconds = myDate.getSeconds() < 10 ? "0" + myDate.getSeconds() : myDate.getSeconds();
+  return (year + "" + month + "" + date + "" + hours + "" + minutes + "" + seconds);
 }
 
-function SaveAndExit() {
-    //TODO: export the test result from the saved result in session storage, then exit the app.
+function exportResult(flag) {
+  ifcloased = flag;
+  try{
+    tizen.filesystem.resolve(
+      'downloads',
+      function(dir) {
+        documentsDir = dir; 
+        dir.listFiles(resolveSuccess, onerror);
+      }, function(e) {
+        $("#exportlog").html("Error: " + e.message);
+        $('#popup_export').popup('open');
+        if (ifcloased == 1) {
+          var app = tizen.application.getCurrentApplication();
+          app.exit();
+        }
+      }, "rw");
+  } catch(error) {
+    $("#exportlog").html("Error" + error.message);
+    $('#popup_export').popup('open');
+    if (ifcloased == 1) {
+      exitTest();
+    }
+  }
+}
+
+function resolveSuccess(files) {
+  var time = getCurrentTime();
+  var testSuiteName = sstorage.getItem("test-suite");
+  var fileName = testSuiteName + "_" + time + ".report.csv";
+  var fsTestDir;
+  if (files.length > 0) {
+    for(var i = 0; i < files.length; i++) {
+      if (files[i].isDirectory) {
+        documentsDir.deleteDirectory(
+          files[i].fullPath,
+          true,
+          function(){
+          }, function(e) {
+            $("#exportlog").html("Error" + e.message);
+            $('#popup_export').popup('open');
+            if (ifcloased == 1) {
+              var app = tizen.application.getCurrentApplication();
+              app.exit();
+            }
+          });
+      }
+    }
+  }
+  fsTestDir = documentsDir.createDirectory(testSuiteName);
+  var testFile = fsTestDir.createFile(fileName);
+  if (testFile != null) {
+    testFile.openStream(
+      "w",
+      function(fs) {
+        var snum = parseInt(sstorage.getItem("setnum"));
+        var resultReport = "Feature, Case Id, Test Case, Pass, Fail, N/A, Measured, Comment, Measurement Name, Value, Unit, Target, Failure\n";
+        for(var i = 0; i < snum; i++) {
+          var sid = "set" + (i + 1);
+          var setarr = JSON.parse(sstorage.getItem(sid));
+          var tids = setarr.tids.split(',');
+          for(var j = 0; j < tids.length; j++) {
+            var tid = tids[j];
+            var casearr = JSON.parse(sstorage.getItem(tid));
+            var resultarr = JSON.parse(sstorage.getItem(casearr.purpose));
+            var tresult = "";
+            if (resultarr != null) {
+              tresult = resultarr.result;
+            }
+            resultReport += setarr.name + "," + tid + "," + casearr.purpose;
+            var pass0, fail0, notrun0;
+            if (casearr.issubcase) {
+              var resultnum = tresult;
+              if (resultnum[3] == "PASS" || resultnum[3] == "FAIL") {
+                pass0 = resultnum[0];
+                fail0 = resultnum[1];
+                notrun0 = resultnum[2];
+              } else {
+                pass0 = 0;
+                fail0 = 0;
+                notrun0 = (JSON.parse(sstorage.getItem("sub_" + tid))).subcasenum;
+              }
+            } else {
+              pass0 = tresult == "PASS" ? 1 : 0;
+              fail0 = tresult == "FAIL" ? 1 : 0;
+              notrun0 = tresult != "" ? 0 : 1;
+            }
+            resultReport += "," + pass0 + "," + fail0 + "," + notrun0 + "\n";
+          } 
+        }
+        fs.write(resultReport);
+        fs.close();
+        $("#exportlog").html("Download 'report.csv' successfully! You can get it from 'TESTER-HOME-DIR/content/Downloads/" + testSuiteName + "/'.");
+        $('#popup_export').popup('open');
+        if (ifcloased == 1) {
+          var app = tizen.application.getCurrentApplication();
+          app.exit();
+        }
+      }, function(e) {
+        $("#exportlog").html("CreateFile error: " + e.message);
+        $('#popup_export').popup('open');
+        if (ifcloased == 1) {
+          var app = tizen.application.getCurrentApplication();
+          app.exit();
+        }
+      }, "UTF-8");
+  }
+}
+
+function onerror(error) {
+  $("#exportlog").html("The error " + error.message + " occurred when listing the files in the selected folder");
+  $('#popup_export').popup('open');
 }
 
 function getVersion() {
@@ -68,48 +186,102 @@ function getApps() {
   return tests;
 }
 
+function getSubApps() {
+  var tests = "";
+  $.ajax({
+    async : false,
+    type : "GET",
+    url : "subtestresult.xml",
+    dataType : "xml",
+    success : function(xml){tests = xml;}
+  });
+  return tests;
+}
+
 function updateList() {
   $("#mylist").empty();
+  var i = 0;
+  var sname, tid, purpose, testsuite, subcaselist, subcasename;
+  subcaselist = []; 
+  $(subapplist).find("set").each(function(){
+    subcasename = $(this).attr("name");
+    subcaselist.push(subcasename);
+    var subcasenum = 0;
+    $(this).find("testcase").each(function(){
+      subcasenum++;
+    });
+    var subcasearr = {subcasenum: subcasenum};
+    sstorage.setItem("sub_" + subcasename, JSON.stringify(subcasearr));
+  });
+  $(applist).find("suite").each(function() {
+    testsuite = $(this).attr("name");
+  })
+  sstorage.setItem("test-suite", testsuite);
   $(applist).find("set").each(function(){
+    i++;
+    var tids = "";
+    sname = $(this).attr("name");
     $("#mylist").append("<li data-role=\"list-divider\">"+$(this).attr("name")+"</li>");
     $(this).find("testcase").each(function(){
-      var url = "tests/" + $(this).attr("id") + "/index.html?test_name="+$(this).attr("purpose");
-      var appLine = "<li class=\"app\" id=\"" + $(this).attr("id") + "\">"
-                  + "<a href=\"" + url + "\">" + "<h2>" + $(this).attr("purpose") + "</h2></a></li>";
+      tid = $(this).attr("id");
+      purpose = $(this).attr("purpose");
+      tids += tid + ",";
+      var url = "tests/" + tid + "/index.html?test_name="+tid;
+      var appLine = "<li class=\"app\" id=\"" + tid + "\">"
+                  + "<a href=\"" + url + "\">" + "<h2>" + purpose + "</h2></a></li>";
       $("#mylist").append(appLine);
+      var issubcase = 0;
+      if (subcaselist.indexOf(tid) != -1) {
+        issubcase = 1;
+      }
+      casearr = {purpose:purpose, sid:"set" + i, issubcase: issubcase};
+      sstorage.setItem(tid, JSON.stringify(casearr));
     });
+    setarr = {name:sname, tids:tids.substring(0, tids.length-1)};
+    sstorage.setItem("set" + i, JSON.stringify(setarr));
   });
-
-  for(var i=0; i<sstorage.length; i++){
-    var name = sstorage.key(i);
-    var item = sstorage.getItem(name);
-    var node = $("h2:contains('"+ name + "')").parent().parent();
-    if (item == "PASS") {
-      node.attr("data-theme", "g");
-      node.append("<img src='css/images/pass.png' class='ui-li-thumb'>");
-      node.append("<span class='ui-li-count' style='color:green;'>PASS</span>");
-      node.find("a h2").css("padding-left", "20px");
-    } else if (item == "FAIL"){
-      node.attr("data-theme", "r");
-      node.append("<img src='css/images/fail.png' class='ui-li-thumb'>");
-      node.append("<span class='ui-li-count' style='color:red;'>FAIL</span>");
-      node.find("a h2").css("padding-left", "20px");
-    } else {
-      resultnum = item.split(",");
-      if (resultnum[3] == "PASS") {
+  sstorage.setItem("setnum", i);
+  for(var j = 0; j < i; j++) {
+    sid = "set" + (j + 1);
+    setarr = JSON.parse(sstorage.getItem(sid));
+    tids = setarr.tids.split(',');
+    for(var k = 0; k < tids.length; k++) {
+      tid = tids[k];
+      casearr = JSON.parse(sstorage.getItem(tid));
+      resultarr = JSON.parse(sstorage.getItem(casearr.purpose));
+      var name = casearr.purpose;
+      var item = "";
+      if (resultarr != null) {
+        item = resultarr.result;
+      }
+      var node = $("h2:contains('"+ name + "')").parent().parent();
+      if (item == "PASS") {
         node.attr("data-theme", "g");
         node.append("<img src='css/images/pass.png' class='ui-li-thumb'>");
-        node.append("<span class='ui-li-count' style='color:green;'>"  + resultnum[0] + "</span>");
-        node.append("<span class='ui-li-count' style='color:red;'>"  + resultnum[1] + "</span>");
-        node.append("<span class='ui-li-count' style='color:gray;'>"  + resultnum[2] + "</span>");
+        node.append("<span class='ui-li-count' style='color:green;'>PASS</span>");
         node.find("a h2").css("padding-left", "20px");
-      } else if (resultnum[3] == "FAIL"){
+      } else if (item == "FAIL"){
         node.attr("data-theme", "r");
         node.append("<img src='css/images/fail.png' class='ui-li-thumb'>");
-        node.append("<span class='ui-li-count' style='color:green;'>"  + resultnum[0] + "</span>");
-        node.append("<span class='ui-li-count' style='color:red;'>"  + resultnum[1] + "</span>");
-        node.append("<span class='ui-li-count' style='color:gray;'>"  + resultnum[2] + "</span>");
+        node.append("<span class='ui-li-count' style='color:red;'>FAIL</span>");
         node.find("a h2").css("padding-left", "20px");
+      } else if (item != "") {
+        resultnum = item;
+        if (resultnum[3] == "PASS") {
+          node.attr("data-theme", "g");
+          node.append("<img src='css/images/pass.png' class='ui-li-thumb'>");
+          node.append("<span class='ui-li-count' style='color:green;'>"  + resultnum[0] + "</span>");
+          node.append("<span class='ui-li-count' style='color:red;'>"  + resultnum[1] + "</span>");
+          node.append("<span class='ui-li-count' style='color:gray;'>"  + resultnum[2] + "</span>");
+          node.find("a h2").css("padding-left", "20px");
+        } else if (resultnum[3] == "FAIL"){
+          node.attr("data-theme", "r");
+          node.append("<img src='css/images/fail.png' class='ui-li-thumb'>");
+          node.append("<span class='ui-li-count' style='color:green;'>"  + resultnum[0] + "</span>");
+          node.append("<span class='ui-li-count' style='color:red;'>"  + resultnum[1] + "</span>");
+          node.append("<span class='ui-li-count' style='color:gray;'>"  + resultnum[2] + "</span>");
+          node.find("a h2").css("padding-left", "20px");
+        }
       }
     }
   }
@@ -171,14 +343,26 @@ $("#home_ui").live("pagebeforecreate", function () {
 
 $("#home_ui").live("pageshow", function () {
   applist = getApps();
+  subapplist = getSubApps();
   updateList();
   updateFooter();
 });
 
-$("#exit").live("click", function () {
+function exitTest(){
+  try {
+    var app = tizen.application.getCurrentApplication();
+    app.exit();
+  } catch(error) {
+    closeWindow();
+  } finally {
+    closeWindow();
+  }
+}
+
+function closeWindow() {
   window.open('', '_self');
   window.close();
-});
+}
 
 $("#reset").live("click", function (event) {
   sstorage.clear();
@@ -191,16 +375,17 @@ $(".app").live("click", function () {
   return false;
 });
 
-$('#main').live('pageshow',function(){
-  for(var i=0;i<sstorage.length;i++){
-    var key = sstorage.key(i);
-    var str = "h2:contains("+ key +")";
+$('#main').live('pageshow',function(){  
+  for(var i=0;i<$("#cspList").find("h2").length;i++){
+    var str = "h2:contains("+ $("#cspList").find("h2")[i].innerHTML +")";
     var node = $(str);
-    var item = sstorage.getItem(key);
-    if (item == "PASS") {
-      node.attr('style', 'color:green;');
-    } else if (item == "FAIL"){
-      node.attr('style', 'color:red;');
+    var item = JSON.parse(sstorage.getItem($("#cspList").find("h2")[i].innerHTML));
+    if (item != null) {
+      if (item.result == "PASS") {
+        node.attr('style', 'color:green;');
+      } else if (item.result == "FAIL"){
+        node.attr('style', 'color:red;');
+      }
     }
   }
   updateFooter();
